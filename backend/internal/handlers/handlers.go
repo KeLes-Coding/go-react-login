@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"go-react-login/backend/internal/models"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -102,18 +103,31 @@ func (h *Handler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 // WelcomeHandler 受保护的路由
 func (h *Handler) WelcomeHandler(w http.ResponseWriter, r *http.Request) {
-	tokenString := r.Header.Get("Authorization")
-	if tokenString == "" {
+	// 1. 获取 Authorization 头部信息
+	authHeader := r.Header.Get("Authorization")
+	if authHeader == "" {
 		http.Error(w, "未提供 Token", http.StatusUnauthorized)
 		return
 	}
 
+	// 2. 移除 "Bearer " 前缀，提取纯 Token
+	// 前端通常发送格式为: "Bearer eyJhbGci..."
+	parts := strings.SplitN(authHeader, " ", 2)
+	if len(parts) != 2 || parts[0] != "Bearer" {
+		http.Error(w, "Token 格式错误 (需要 Bearer 前缀)", http.StatusUnauthorized)
+		return
+	}
+	tokenString := parts[1]
+
+	// 3. 解析 Token
 	claims := &models.Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return JwtKey, nil
 	})
 
 	if err != nil || !token.Valid {
+		// 调试建议：如果还报错，可以 fmt.Println(err) 查看具体原因
+		fmt.Println("❌ Token 验证失败:", err)
 		http.Error(w, "Token 无效或已过期", http.StatusUnauthorized)
 		return
 	}

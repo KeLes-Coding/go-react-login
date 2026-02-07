@@ -1,0 +1,106 @@
+:root {
+  --bg-color: #f4f4f5;       /* 浅灰背景 */
+  --card-bg: #ffffff;        /* 白色卡片 */
+  --text-main: #18181b;      /* 深黑文字 */
+  --text-muted: #71717a;     /* 灰色辅助文字 */
+  --primary-color: #f97316;  /* 活力橙 */
+  --border-color: #e4e4e7;   /* 边框灰 */
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* 新增：应用的主容器（那个白色的大卡片） */
+.app-container {
+  background-color: var(--card-bg);
+  width: 100%;
+  max-width: 400px; /* 限制最大宽度，看起来像手机/登录框 */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* 新增：导航栏样式 */
+.nav-header {
+  display: flex;
+  gap: 1.5rem; /* 按钮之间的间距 */
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  justify-content: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--text-main);
+}
+
+/* --- 表单通用样式 --- */
+h2 {
+  margin-top: 0;
+  color: var(--text-main);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-sizing: border-box; /* 确保 padding 不会撑大宽度 */
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+p {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
